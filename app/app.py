@@ -32,7 +32,7 @@ def index_get():
         response = get_city_weather_data(city.name)
 
         weather = {
-            'city': city.name,
+            'city': city.name.title(),
             'temperature': round(response['main']['temp']),
             'description': response['weather'][0]['description'].title(),
             'icon': response['weather'][0]['icon']
@@ -46,7 +46,7 @@ def index_get():
 def index_post():
     err_msg = ""
     if request.method == "POST":
-        new_city = request.form.get("city")
+        new_city = request.form.get("city").lower()
         if new_city:
             existing_city = City.query.filter_by(name=new_city).first()
             if not existing_city:
